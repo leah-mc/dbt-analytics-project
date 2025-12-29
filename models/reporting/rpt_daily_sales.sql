@@ -10,7 +10,50 @@ daily as (
         avg(order_total) as avg_order_value
     from orders
     group by 1
+),
+
+with_comparisons as (
+    select
+        sale_date,
+        total_orders,
+        total_revenue,
+        avg_order_value,
+
+        -- Previous day metrics using LAG
+        lag(total_orders) over (order by sale_date) as prev_day_orders,
+        lag(total_revenue) over (order by sale_date) as prev_day_revenue,
+
+        -- Day-over-day changes
+        total_orders - lag(total_orders) over (order by sale_date) as orders_dod_change,
+        total_revenue - lag(total_revenue) over (order by sale_date) as revenue_dod_change,
+
+        -- Day-over-day percent changes
+        round(
+            safe_divide(
+                total_orders - lag(total_orders) over (order by sale_date),
+                lag(total_orders) over (order by sale_date)
+            ) * 100,
+            2
+        ) as orders_dod_pct_change,
+        round(
+            safe_divide(
+                total_revenue - lag(total_revenue) over (order by sale_date),
+                lag(total_revenue) over (order by sale_date)
+            ) * 100,
+            2
+        ) as revenue_dod_pct_change,
+
+        -- 7-day rolling average
+        round(
+            avg(total_revenue) over (
+                order by sale_date
+                rows between 6 preceding and current row
+            ),
+            2
+        ) as revenue_7day_avg
+
+    from daily
 )
 
-select * from daily
+select * from with_comparisons
 order by sale_date

@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: rpt_daily_sales
-    description: Daily sales summary report with order counts, revenue, and average order value
+    description: Daily sales summary report with order counts, revenue, day-over-day comparisons, and rolling averages
     config:
       tags:
         - layer:reporting
@@ -27,6 +27,27 @@ models:
         data_type: numeric
       - name: avg_order_value
         description: Average order value for this date
+        data_type: numeric
+      - name: prev_day_orders
+        description: Total orders from the previous day (LAG window function)
+        data_type: int64
+      - name: prev_day_revenue
+        description: Total revenue from the previous day (LAG window function)
+        data_type: numeric
+      - name: orders_dod_change
+        description: Day-over-day change in order count (current - previous)
+        data_type: int64
+      - name: revenue_dod_change
+        description: Day-over-day change in revenue (current - previous)
+        data_type: numeric
+      - name: orders_dod_pct_change
+        description: Day-over-day percent change in orders
+        data_type: numeric
+      - name: revenue_dod_pct_change
+        description: Day-over-day percent change in revenue
+        data_type: numeric
+      - name: revenue_7day_avg
+        description: 7-day rolling average of revenue (current day + 6 preceding days)
         data_type: numeric
 
   - name: rpt_top_customers
