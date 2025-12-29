@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: customer dimension with order metrics
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_products
+    description: product dimension with sales metrics
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_orders
+    description: order fact table
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_order_items
+    description: order line items fact table
+    columns:
+      - name: order_item_id
+        tests:
+          - unique
+          - not_null
