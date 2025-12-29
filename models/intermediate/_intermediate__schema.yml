@@ -2,23 +2,69 @@ version: 2
 
 models:
   - name: int_orders_enriched
-    description: Orders enriched with customer info and order totals
+    description: Orders enriched with customer information and calculated order totals
     columns:
       - name: order_id
+        description: Unique identifier for each order
+        data_type: int64
         config:
           meta:
             primary_key: true
         data_tests:
           - unique
           - not_null
+      - name: customer_id
+        description: Foreign key to the customer who placed the order
+        data_type: int64
+      - name: customer_name
+        description: Full name of the customer
+        data_type: string
+      - name: email
+        description: Customer email address
+        data_type: string
+      - name: order_status
+        description: Current status of the order
+        data_type: string
+      - name: order_date
+        description: Date and time when the order was placed
+        data_type: timestamp
+      - name: order_total
+        description: Total monetary value of the order (sum of all line items)
+        data_type: numeric
+      - name: item_count
+        description: Total number of line items in the order
+        data_type: int64
 
   - name: int_order_items_enriched
-    description: Order items enriched with product details
+    description: Order line items enriched with product details and calculated totals
     columns:
       - name: order_item_id
+        description: Unique identifier for each order line item
+        data_type: int64
         config:
           meta:
             primary_key: true
         data_tests:
           - unique
           - not_null
+      - name: order_id
+        description: Foreign key to the parent order
+        data_type: int64
+      - name: product_id
+        description: Foreign key to the product
+        data_type: int64
+      - name: product_name
+        description: Display name of the product
+        data_type: string
+      - name: category
+        description: Product category classification
+        data_type: string
+      - name: quantity
+        description: Number of units purchased
+        data_type: int64
+      - name: unit_price
+        description: Price per unit at time of purchase
+        data_type: numeric
+      - name: line_total
+        description: Total value for this line item (quantity * unit_price)
+        data_type: numeric

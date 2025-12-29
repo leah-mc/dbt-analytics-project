@@ -2,41 +2,98 @@ version: 2
 
 models:
   - name: stg_customers
+    description: Staged customer data with standardized column names
     columns:
       - name: customer_id
+        description: Unique identifier for each customer
+        data_type: int64
         config:
           meta:
             primary_key: true
         data_tests:
           - unique
           - not_null
+      - name: customer_name
+        description: Full name of the customer
+        data_type: string
+      - name: email
+        description: Customer email address
+        data_type: string
+      - name: created_at
+        description: Timestamp when the customer record was created
+        data_type: timestamp
 
   - name: stg_products
+    description: Staged product catalog with standardized column names
     columns:
       - name: product_id
+        description: Unique identifier for each product
+        data_type: int64
         config:
           meta:
             primary_key: true
         data_tests:
           - unique
           - not_null
+      - name: product_name
+        description: Display name of the product
+        data_type: string
+      - name: category
+        description: Product category classification
+        data_type: string
+      - name: price
+        description: Unit price of the product
+        data_type: numeric
 
   - name: stg_orders
+    description: Staged order header data with standardized column names
     columns:
       - name: order_id
+        description: Unique identifier for each order
+        data_type: int64
         config:
           meta:
             primary_key: true
         data_tests:
           - unique
           - not_null
+      - name: customer_id
+        description: Foreign key to customer who placed the order
+        data_type: int64
+        data_tests:
+          - not_null
+      - name: order_status
+        description: Current status of the order (pending, completed, cancelled)
+        data_type: string
+      - name: order_date
+        description: Date and time when the order was placed
+        data_type: timestamp
 
   - name: stg_order_items
+    description: Staged order line items with standardized column names
     columns:
       - name: order_item_id
+        description: Unique identifier for each order line item
+        data_type: int64
         config:
           meta:
             primary_key: true
         data_tests:
           - unique
           - not_null
+      - name: order_id
+        description: Foreign key to the parent order
+        data_type: int64
+        data_tests:
+          - not_null
+      - name: product_id
+        description: Foreign key to the product purchased
+        data_type: int64
+        data_tests:
+          - not_null
+      - name: quantity
+        description: Number of units purchased
+        data_type: int64
+      - name: unit_price
+        description: Price per unit at time of purchase
+        data_type: numeric
