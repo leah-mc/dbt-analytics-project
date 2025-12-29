@@ -20,13 +20,15 @@ jobs:
           python-version: '3.11'
 
       - name: Install dbt
-        run: pip install dbt-bigquery
+        run: pip install dbt-core dbt-postgres  # change adapter as needed
 
       - name: Install dbt packages
         run: dbt deps
 
       - name: Compile dbt
-        run: dbt compile
+        run: dbt compile --target dev
         env:
-          DBT_TARGET: dev
-          BIGQUERY_KEYFILE: ${{ secrets.BIGQUERY_KEYFILE }}
+          DBT_USER: ${{ secrets.DBT_USER }}
+          DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
+          DBT_HOST: ${{ secrets.DBT_HOST }}
+          DBT_DATABASE: ${{ secrets.DBT_DATABASE }}

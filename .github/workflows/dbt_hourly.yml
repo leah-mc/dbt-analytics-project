@@ -21,19 +21,23 @@ jobs:
           python-version: '3.11'
 
       - name: Install dbt
-        run: pip install dbt-bigquery
+        run: pip install dbt-core dbt-postgres  # change adapter as needed
 
       - name: Install dbt packages
         run: dbt deps
 
       - name: Run dbt models (hourly tag)
-        run: dbt run --select tag:hourly
+        run: dbt run --select tag:hourly --target prod
         env:
-          DBT_TARGET: prod
-          BIGQUERY_KEYFILE: ${{ secrets.BIGQUERY_KEYFILE }}
+          DBT_USER: ${{ secrets.DBT_USER }}
+          DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
+          DBT_HOST: ${{ secrets.DBT_HOST }}
+          DBT_DATABASE: ${{ secrets.DBT_DATABASE }}
 
       - name: Test dbt models
-        run: dbt test --select tag:hourly
+        run: dbt test --select tag:hourly --target prod
         env:
-          DBT_TARGET: prod
-          BIGQUERY_KEYFILE: ${{ secrets.BIGQUERY_KEYFILE }}
+          DBT_USER: ${{ secrets.DBT_USER }}
+          DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
+          DBT_HOST: ${{ secrets.DBT_HOST }}
+          DBT_DATABASE: ${{ secrets.DBT_DATABASE }}

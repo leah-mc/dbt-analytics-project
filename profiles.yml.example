@@ -1,20 +1,25 @@
+# copy to ~/.dbt/profiles.yml and fill in your credentials
+# or set environment variables for CI/CD
+
 default:
   target: dev
   outputs:
     dev:
-      type: bigquery
-      method: service-account
-      project: your-gcp-project
-      dataset: dbt_dev
-      location: US
-      keyfile: "{{ env_var('BIGQUERY_KEYFILE') }}"
+      type: postgres  # or snowflake, bigquery, redshift, databricks
+      host: "{{ env_var('DBT_HOST', 'localhost') }}"
+      user: "{{ env_var('DBT_USER', 'postgres') }}"
+      password: "{{ env_var('DBT_PASSWORD', '') }}"
+      port: 5432
+      dbname: "{{ env_var('DBT_DATABASE', 'analytics') }}"
+      schema: dbt_dev
       threads: 4
 
     prod:
-      type: bigquery
-      method: service-account
-      project: your-gcp-project
-      dataset: analytics
-      location: US
-      keyfile: "{{ env_var('BIGQUERY_KEYFILE') }}"
+      type: postgres
+      host: "{{ env_var('DBT_HOST') }}"
+      user: "{{ env_var('DBT_USER') }}"
+      password: "{{ env_var('DBT_PASSWORD') }}"
+      port: 5432
+      dbname: "{{ env_var('DBT_DATABASE') }}"
+      schema: analytics
       threads: 8
