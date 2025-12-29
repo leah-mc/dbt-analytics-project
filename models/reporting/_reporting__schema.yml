@@ -3,6 +3,12 @@ version: 2
 models:
   - name: rpt_daily_sales
     description: Daily sales summary report with order counts, revenue, and average order value
+    config:
+      tags:
+        - layer:reporting
+        - domain:sales
+        - category:performance
+        - cadence:hourly
     columns:
       - name: sale_date
         description: Calendar date of sales activity
@@ -25,6 +31,12 @@ models:
 
   - name: rpt_top_customers
     description: Customer ranking report ordered by lifetime total spend
+    config:
+      tags:
+        - layer:reporting
+        - domain:customers
+        - category:performance
+        - cadence:daily
     columns:
       - name: customer_id
         description: Unique identifier for each customer
@@ -56,6 +68,12 @@ models:
 
   - name: rpt_category_sales
     description: Sales performance report aggregated by product category
+    config:
+      tags:
+        - layer:reporting
+        - domain:products
+        - category:performance
+        - cadence:daily
     columns:
       - name: category
         description: Product category name

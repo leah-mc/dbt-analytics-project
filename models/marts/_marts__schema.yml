@@ -3,6 +3,12 @@ version: 2
 models:
   - name: dim_customers
     description: Customer dimension table with aggregated order metrics and lifetime value
+    config:
+      tags:
+        - layer:marts
+        - domain:customers
+        - category:dimension
+        - cadence:hourly
     columns:
       - name: customer_id
         description: Unique identifier for each customer
@@ -37,6 +43,12 @@ models:
 
   - name: dim_products
     description: Product dimension table with aggregated sales metrics
+    config:
+      tags:
+        - layer:marts
+        - domain:products
+        - category:dimension
+        - cadence:hourly
     columns:
       - name: product_id
         description: Unique identifier for each product
@@ -65,6 +77,12 @@ models:
 
   - name: fct_orders
     description: Order fact table with denormalized customer information
+    config:
+      tags:
+        - layer:marts
+        - domain:orders
+        - category:fact
+        - cadence:hourly
     columns:
       - name: order_id
         description: Unique identifier for each order
@@ -96,6 +114,12 @@ models:
 
   - name: fct_order_items
     description: Order line items fact table with denormalized product and order details
+    config:
+      tags:
+        - layer:marts
+        - domain:orders
+        - category:fact
+        - cadence:hourly
     columns:
       - name: order_item_id
         description: Unique identifier for each order line item

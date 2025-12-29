@@ -3,6 +3,11 @@ version: 2
 models:
   - name: int_orders_enriched
     description: Orders enriched with customer information and calculated order totals
+    config:
+      tags:
+        - layer:intermediate
+        - domain:orders
+        - cadence:hourly
     columns:
       - name: order_id
         description: Unique identifier for each order
@@ -37,6 +42,11 @@ models:
 
   - name: int_order_items_enriched
     description: Order line items enriched with product details and calculated totals
+    config:
+      tags:
+        - layer:intermediate
+        - domain:orders
+        - cadence:hourly
     columns:
       - name: order_item_id
         description: Unique identifier for each order line item

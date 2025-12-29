@@ -3,6 +3,11 @@ version: 2
 models:
   - name: stg_customers
     description: Staged customer data with standardized column names
+    config:
+      tags:
+        - layer:staging
+        - domain:customers
+        - cadence:daily
     columns:
       - name: customer_id
         description: Unique identifier for each customer
@@ -25,6 +30,11 @@ models:
 
   - name: stg_products
     description: Staged product catalog with standardized column names
+    config:
+      tags:
+        - layer:staging
+        - domain:products
+        - cadence:daily
     columns:
       - name: product_id
         description: Unique identifier for each product
@@ -47,6 +57,11 @@ models:
 
   - name: stg_orders
     description: Staged order header data with standardized column names
+    config:
+      tags:
+        - layer:staging
+        - domain:orders
+        - cadence:hourly
     columns:
       - name: order_id
         description: Unique identifier for each order
@@ -71,6 +86,11 @@ models:
 
   - name: stg_order_items
     description: Staged order line items with standardized column names
+    config:
+      tags:
+        - layer:staging
+        - domain:orders
+        - cadence:hourly
     columns:
       - name: order_item_id
         description: Unique identifier for each order line item
