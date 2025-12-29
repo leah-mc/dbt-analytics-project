@@ -1,0 +1,30 @@
+name: SQLFluff Lint
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'models/**/*.sql'
+      - 'macros/**/*.sql'
+      - '.sqlfluff'
+
+jobs:
+  sqlfluff-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install SQLFluff
+        run: pip install sqlfluff sqlfluff-templater-dbt dbt-core dbt-postgres
+
+      - name: Install dbt packages
+        run: dbt deps
+
+      - name: Run SQLFluff lint
+        run: sqlfluff lint models/ --dialect bigquery
