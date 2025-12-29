@@ -33,3 +33,5 @@ models:
       +materialized: table
       +tags:
         - daily
+  elementary:
+    +schema: elementary

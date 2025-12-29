@@ -1,0 +1,40 @@
+name: Elementary Data Monitoring
+
+on:
+  schedule:
+    # run daily at 6am utc
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  elementary-monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install dbt-core dbt-postgres  # your adapter here
+          pip install elementary-data[postgres]  # your adapter here
+
+      - name: Install dbt packages
+        run: dbt deps
+
+      - name: Generate Elementary report
+        run: edr report --profiles-dir ./ --profile-target prod
+
+      - name: Upload Elementary report
+        uses: actions/upload-artifact@v4
+        with:
+          name: elementary-report
+          path: edr_target/elementary_report.html
+          retention-days: 30
+
+      - name: Send alerts to Slack
+        run: edr monitor --profiles-dir ./ --profile-target prod --slack-webhook ${{ secrets.SLACK_WEBHOOK_URL }}
