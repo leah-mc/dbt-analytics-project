@@ -95,6 +95,15 @@ Set these secrets in your repo:
 - `DBT_PASSWORD`
 - `DBT_DATABASE`
 
+## Documentation
+
+```bash
+dbt docs generate
+dbt docs serve
+```
+
+Opens at http://localhost:8080 with the DAG lineage graph.
+
 ## Sources
 
 Configure your source schema in `models/staging/_sources.yml` to point to your raw data tables.
