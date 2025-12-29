@@ -4,12 +4,12 @@ with orders as (
 
 daily as (
     select
-        date(order_date) as sale_date,
+        cast(order_date as date) as sale_date,
         count(*) as total_orders,
         sum(order_total) as total_revenue,
         avg(order_total) as avg_order_value
     from orders
-    group by date(order_date)
+    group by 1
 )
 
 select * from daily

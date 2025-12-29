@@ -4,27 +4,27 @@ models:
   - name: stg_customers
     columns:
       - name: customer_id
-        tests:
+        data_tests:
           - unique
           - not_null
 
   - name: stg_products
     columns:
       - name: product_id
-        tests:
+        data_tests:
           - unique
           - not_null
 
   - name: stg_orders
     columns:
       - name: order_id
-        tests:
+        data_tests:
           - unique
           - not_null
 
   - name: stg_order_items
     columns:
       - name: order_item_id
-        tests:
+        data_tests:
           - unique
           - not_null
