@@ -5,6 +5,9 @@ models:
     description: customer dimension with order metrics
     columns:
       - name: customer_id
+        config:
+          meta:
+            primary_key: true
         data_tests:
           - unique
           - not_null
@@ -13,6 +16,9 @@ models:
     description: product dimension with sales metrics
     columns:
       - name: product_id
+        config:
+          meta:
+            primary_key: true
         data_tests:
           - unique
           - not_null
@@ -21,6 +27,9 @@ models:
     description: order fact table
     columns:
       - name: order_id
+        config:
+          meta:
+            primary_key: true
         data_tests:
           - unique
           - not_null
@@ -29,6 +38,9 @@ models:
     description: order line items fact table
     columns:
       - name: order_item_id
+        config:
+          meta:
+            primary_key: true
         data_tests:
           - unique
           - not_null

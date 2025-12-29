@@ -1,7 +1,19 @@
 version: 2
 
 models:
-  - name: stg_customers
+  - name: rpt_daily_sales
+    description: Daily sales summary with revenue and order counts
+    columns:
+      - name: sale_date
+        config:
+          meta:
+            primary_key: true
+        data_tests:
+          - unique
+          - not_null
+
+  - name: rpt_top_customers
+    description: Top customers ranked by total spend
     columns:
       - name: customer_id
         config:
@@ -11,29 +23,10 @@ models:
           - unique
           - not_null
 
-  - name: stg_products
+  - name: rpt_category_sales
+    description: Sales metrics aggregated by product category
     columns:
-      - name: product_id
-        config:
-          meta:
-            primary_key: true
-        data_tests:
-          - unique
-          - not_null
-
-  - name: stg_orders
-    columns:
-      - name: order_id
-        config:
-          meta:
-            primary_key: true
-        data_tests:
-          - unique
-          - not_null
-
-  - name: stg_order_items
-    columns:
-      - name: order_item_id
+      - name: category
         config:
           meta:
             primary_key: true
