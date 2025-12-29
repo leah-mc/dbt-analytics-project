@@ -14,6 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -25,6 +28,15 @@ jobs:
 
       - name: Install dbt packages
         run: dbt deps
+
+      - name: Run SQLFluff fix
+        run: sqlfluff fix models/ --dialect bigquery
+
+      - name: Commit SQLFluff fixes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: sqlfluff auto-fix"
+          branch: ${{ github.head_ref }}
 
       - name: Run SQLFluff lint
         run: sqlfluff lint models/ --dialect bigquery
