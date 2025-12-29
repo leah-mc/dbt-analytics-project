@@ -19,15 +19,15 @@ with_comparisons as (
         total_revenue,
         avg_order_value,
 
-        -- Previous day metrics using LAG
+        -- previous day metrics using lag
         lag(total_orders) over (order by sale_date) as prev_day_orders,
         lag(total_revenue) over (order by sale_date) as prev_day_revenue,
 
-        -- Day-over-day changes
+        -- day-over-day changes
         total_orders - lag(total_orders) over (order by sale_date) as orders_dod_change,
         total_revenue - lag(total_revenue) over (order by sale_date) as revenue_dod_change,
 
-        -- Day-over-day percent changes
+        -- day-over-day percent changes
         round(
             safe_divide(
                 total_orders - lag(total_orders) over (order by sale_date),
