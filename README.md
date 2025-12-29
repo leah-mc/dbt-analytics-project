@@ -43,14 +43,6 @@ Data flows up through layers like a lasagna:
                         🍽️  🍽️  🍽️  🍽️  🍽️
 ```
 
-```
-models/
-├── staging/      # pasta sheets (hourly)
-├── intermediate/ # meat sauce (hourly)
-├── marts/        # ricotta layer (daily)
-└── reporting/    # cheese topping (daily)
-```
-
 ## Tags
 
 Models are tagged by refresh cadence:
