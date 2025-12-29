@@ -30,7 +30,7 @@ jobs:
         run: dbt deps
 
       - name: Run SQLFluff fix
-        run: sqlfluff fix models/ --dialect bigquery
+        run: sqlfluff fix models/ --dialect bigquery  # your dialect here
 
       - name: Commit SQLFluff fixes
         run: |
