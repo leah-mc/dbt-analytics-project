@@ -15,6 +15,25 @@ dbt build
 ## Structure
 
 ```
+    ┌─────────────────────────────────────────┐
+    │  REPORTING    rpt_*                     │  <- cheese topping (served to users)
+    │  daily sales, top customers, categories │
+    ├─────────────────────────────────────────┤
+    │  MARTS        dim_* / fct_*             │  <- ricotta layer (business-ready)
+    │  dimensions & facts                     │
+    ├─────────────────────────────────────────┤
+    │  INTERMEDIATE int_*                     │  <- meat sauce (joins & logic)
+    │  enriched orders, enriched items        │
+    ├─────────────────────────────────────────┤
+    │  STAGING      stg_*                     │  <- pasta sheets (cleaned raw data)
+    │  customers, products, orders, items     │
+    ├─────────────────────────────────────────┤
+    │  SOURCES      raw.*                     │  <- the plate (raw database tables)
+    │  raw.customers, raw.products, etc       │
+    └─────────────────────────────────────────┘
+```
+
+```
 models/
 ├── staging/      # raw data cleaning (hourly)
 ├── intermediate/ # business logic joins (hourly)
