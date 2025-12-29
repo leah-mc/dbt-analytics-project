@@ -41,3 +41,18 @@ sources:
           - name: product_id
           - name: quantity
           - name: unit_price
+
+      - name: sessions
+        loaded_at_field: session_started_at
+        description: "Website session data with UTM attribution parameters"
+        columns:
+          - name: session_id
+          - name: customer_id
+          - name: session_started_at
+          - name: utm_source
+          - name: utm_medium
+          - name: utm_campaign
+          - name: utm_content
+          - name: utm_term
+          - name: landing_page
+          - name: referrer
