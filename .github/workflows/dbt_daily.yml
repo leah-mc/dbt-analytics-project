@@ -1,0 +1,39 @@
+name: dbt daily run
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 6am UTC daily
+  workflow_dispatch:
+
+env:
+  DBT_PROFILES_DIR: ./
+
+jobs:
+  dbt-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt
+        run: pip install dbt-bigquery
+
+      - name: Install dbt packages
+        run: dbt deps
+
+      - name: Run dbt models (daily tag)
+        run: dbt run --select tag:daily
+        env:
+          DBT_TARGET: prod
+          BIGQUERY_KEYFILE: ${{ secrets.BIGQUERY_KEYFILE }}
+
+      - name: Test dbt models
+        run: dbt test --select tag:daily
+        env:
+          DBT_TARGET: prod
+          BIGQUERY_KEYFILE: ${{ secrets.BIGQUERY_KEYFILE }}

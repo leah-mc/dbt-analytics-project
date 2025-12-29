@@ -1,0 +1,32 @@
+name: dbt PR check
+
+on:
+  pull_request:
+    branches: [main]
+
+env:
+  DBT_PROFILES_DIR: ./
+
+jobs:
+  dbt-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt
+        run: pip install dbt-bigquery
+
+      - name: Install dbt packages
+        run: dbt deps
+
+      - name: Compile dbt
+        run: dbt compile
+        env:
+          DBT_TARGET: dev
+          BIGQUERY_KEYFILE: ${{ secrets.BIGQUERY_KEYFILE }}

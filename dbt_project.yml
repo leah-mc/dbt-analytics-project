@@ -19,9 +19,17 @@ models:
   retail_dwh:
     staging:
       +materialized: view
+      +tags:
+        - hourly
     intermediate:
       +materialized: table
+      +tags:
+        - hourly
     marts:
       +materialized: table
+      +tags:
+        - daily
     reporting:
       +materialized: table
+      +tags:
+        - daily

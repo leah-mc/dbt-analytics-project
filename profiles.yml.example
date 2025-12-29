@@ -1,0 +1,20 @@
+default:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: your-gcp-project
+      dataset: dbt_dev
+      location: US
+      keyfile: "{{ env_var('BIGQUERY_KEYFILE') }}"
+      threads: 4
+
+    prod:
+      type: bigquery
+      method: service-account
+      project: your-gcp-project
+      dataset: analytics
+      location: US
+      keyfile: "{{ env_var('BIGQUERY_KEYFILE') }}"
+      threads: 8
