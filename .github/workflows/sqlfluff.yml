@@ -33,10 +33,12 @@ jobs:
         run: sqlfluff fix models/ --dialect bigquery
 
       - name: Commit SQLFluff fixes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "style: sqlfluff auto-fix"
-          branch: ${{ github.head_ref }}
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git diff --staged --quiet || git commit -m "style: sqlfluff auto-fix"
+          git push
 
       - name: Run SQLFluff lint
         run: sqlfluff lint models/ --dialect bigquery
