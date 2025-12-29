@@ -20,7 +20,7 @@ final as (
         coalesce(ps.units_sold, 0) as units_sold,
         coalesce(ps.revenue, 0) as revenue
     from products p
-    left join product_sales ps on p.product_id = ps.product_id
+    left join product_sales as ps on p.product_id = ps.product_id
 )
 
 select * from final

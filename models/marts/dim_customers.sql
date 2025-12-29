@@ -24,7 +24,7 @@ final as (
         co.first_order,
         co.last_order
     from customers c
-    left join customer_orders co on c.customer_id = co.customer_id
+    left join customer_orders as co on c.customer_id = co.customer_id
 )
 
 select * from final

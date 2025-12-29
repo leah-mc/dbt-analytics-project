@@ -3,8 +3,16 @@ version: 2
 sources:
   - name: raw
     schema: raw_data
+    freshness:
+      warn_after:
+        count: 24
+        period: hour
+      error_after:
+        count: 48
+        period: hour
     tables:
       - name: customers
+        loaded_at_field: created_at
         columns:
           - name: customer_id
           - name: name
@@ -19,6 +27,7 @@ sources:
           - name: price
 
       - name: orders
+        loaded_at_field: created_at
         columns:
           - name: order_id
           - name: customer_id

@@ -26,8 +26,8 @@ enriched as (
         coalesce(ot.order_total, 0) as order_total,
         coalesce(ot.item_count, 0) as item_count
     from orders o
-    left join customers c on o.customer_id = c.customer_id
-    left join order_totals ot on o.order_id = ot.order_id
+    left join customers as c on o.customer_id = c.customer_id
+    left join order_totals as ot on o.order_id = ot.order_id
 )
 
 select * from enriched

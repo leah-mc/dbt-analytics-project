@@ -23,7 +23,7 @@ final as (
         oi.unit_price,
         oi.line_total
     from order_items oi
-    left join orders o on oi.order_id = o.order_id
+    left join orders as o on oi.order_id = o.order_id
 )
 
 select * from final

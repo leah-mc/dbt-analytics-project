@@ -17,7 +17,7 @@ enriched as (
         oi.unit_price,
         oi.quantity * oi.unit_price as line_total
     from order_items oi
-    left join products p on oi.product_id = p.product_id
+    left join products as p on oi.product_id = p.product_id
 )
 
 select * from enriched
